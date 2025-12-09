@@ -1,0 +1,8 @@
+from django.contrib import admin
+
+# member 앱에서 models 파일안에 Member 클래스 가져오기
+from member.models import Member
+
+admin.site.register(Member)
+
+
