@@ -21,7 +21,11 @@
 # - student >template>student>write.html 파일생성
 # - 서버확인
 
+
 # 4. admin 생성
+# " DB를 생성하기 전에 makemigrations를 꼭 선언해주어야함"
+# " DB를 생성하기 전에, 생성이 가능한지 체크해주는 작업"
+
 # - makemigrations 실행
 # - migrate 실행
 # - createsuperuser 생성
