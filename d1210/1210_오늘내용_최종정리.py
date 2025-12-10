@@ -38,15 +38,58 @@
 # - makemigrations 실행
 # - migrate 실행
 
+
+# model db를 생성하는 페이지
+# from django.db import models
+
+# 테이블을 생성하면 항상 id가 자동생성됨: AutoField
+
+#
+# class Student(models.Model):
+#     sno= models.AutoField(primary_key=True)
+#     name= models.CharField(max_length=100)
+#     age= models.IntegerField(default=1)
+#     grade= models.IntegerField(default=1)
+#     gender= models.CharField(max_length=10)
+#     hobby= models.CharField(max_length=100,default='게임')
+    
+#     def __str__(self):
+#         return f"{self.sno},{self.name},{self.age},{self.grade},{self.gender}"
+#
+
+
 # 6. student>write.html form생성
 # - form html 추가
 # - views.py>db 추가(save())
 # - admin페이지에서 확인
 
+#
+# from django.contrib import admin
+# from student.models import Student
+
+
+# model 페이지 안에 생성한 db를 admin 페이지에 등록해서 보여줌
+# admin.site.register(Student)
+#
+
+
+
 # 7. student>list.html 페이지 생성
 # - urls.py 추가
 # - views.py 추가
 # - db 부분 추가 - Student.objects.all() 추가
+
+
+# student 앱안에 list함수 부분작성
+
+# 학생리스트함수
+# def list(request):
+#     qs= Student.objects.all().order_by('-sno')
+#     context= {"our_class":"SM유니버스 직무교육","stu_list":qs}
+#     return render(request,'student/list.html',context)
+#
+
+
 # - list.html 페이지 확인
 
 # 8. student > view.html 페이지 생성
