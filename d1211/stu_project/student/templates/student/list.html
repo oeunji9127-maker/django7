@@ -17,10 +17,7 @@
     </style>
 </head>
 <body>
-    <!--html 주석-->
-    {%comment%}디장고 주석은 다음과 같습니다{%endcomment%}
-
-    <h2>학생리스트</h2>
+    <h2>학생리스트 페이지</h2>
     
     <table>
         <tr>
@@ -29,11 +26,13 @@
             <th>나이</th>
             <th>학년</th>
             <th>성별</th>
+            <th>취미</th>
         </tr>
-        {%if stu_list%}
-            {%for s in stu_list%}
+
+
+        {%if list%}
+            {%for s in list%}
             <tr>
-                <th>{{s.sno}}</th>
                 <th>   
                     {%comment%}
 
@@ -45,18 +44,20 @@
                     
                     {%endcomment%}
 
-                    <a href='{%url "student:view" s.sno %}'>{{s.name}}</a>
-                </th>
+                <a href="">{{s.sno}}</a></th>
+                <th><a href="{% url 'student:view' s.sno %}">{{s.name}}</a></th>
                 <th>{{s.age}}</th>
                 <th>{{s.grade}}</th>
                 <th>{{s.gender}}</th>
+                <th>{{s.hobby}}</th>
             </tr>
             {%endfor%}
         {%else%}
         <tr>
-            <td colspan='5'>데이터가 존재하지않습니다</td>
+            <td colspan='6'>데이터가 존재하지않습니다</td>
         </tr>
         {%endif%}
+            
     </table>
     <div id="btn">
         <div class="d01"><a href="/student/write">글쓰기</a></div>

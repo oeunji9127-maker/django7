@@ -20,17 +20,19 @@ def write(request):
         # 리스트타입을 문자열항목에 저장하면 자동으로 형변환됨
         
         # 입력과 동시에 저장
-        Student.objects.create(name=name,age=age,grade=grade,gender=gender,hobby=hobby)
-        
-        print("이름",request.POST.get("name"))
-        print("나이",request.POST.get("age"))
-        print("학년",request.POST.get("grade"))
-        print("성별",request.POST.get("gender"))
-        print("취미",request.POST.getlist("hobby"))
-        
+        qs= Student(name=name,age=age,grade=grade,gender=gender,hobby=hobby)
+        qs.save()
         
         return redirect(reverse('student:list'))
         # return redirect('/student/list/')
+        
+        # print("이름",request.POST.get("name"))
+        # print("나이",request.POST.get("age"))
+        # print("학년",request.POST.get("grade"))
+        # print("성별",request.POST.get("gender"))
+        # print("취미",request.POST.getlist("hobby"))
+        
+        
         
 
 # 학생리스트함수

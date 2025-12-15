@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>학생정보 입력페이지</h2>
+    <br><br>
+    <form action="{%url 'student:write'%}" method="POST">
+        {% csrf_token %}
+        <label>이름</label>
+        <input type="text" name="name">
+        <label>나이</label>
+        <input type="text" name="age">
+        <label>학년</label>
+        <input type="text" name="grade"><br>
+        <label>성별</label><br>
+        <label>남자</label>
+        <input type="radio" name="gender" value="남자"><br>
+        <label>여자</label>
+        <input type="radio" name="gender" value="여자"><br>
+        <label>취미</label><br>
+        <label>게임</label>
+        <input type="checkbox" name="hobby" value="게임">
+        <label>헬스</label>
+        <input type="checkbox" name="hobby" value="헬스">
+        <label>음악듣기</label>
+        <input type="checkbox" name="hobby" value="음악듣기">
+        <label>등산</label>
+        <input type="checkbox" name="hobby" value="등산">
+        <label>수영</label>
+        <input type="checkbox" name="hobby" value="수영">
+    </form>
+</body>
+</html>
