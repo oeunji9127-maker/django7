@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>VLAST Shop - 글쓰기</title>
+  <title>VLAST Shop - 글수정</title>
+   <script>
+    if('{{request.session.session_id}}' == ''){
+      alert("로그인을 하셔야 글수정이 가능합니다.");
+      location.href = '/member/login/';
+    }
+  </script>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -110,6 +116,12 @@
       color: #A0A0A0;
     }
   </style>
+  <script>
+    if('{{flag}}' == '1'){
+      alert("게시글을 수정합니다.");
+      location.href='/board/list/';
+    }
+  </script>
 </head>
 <body>
 
@@ -123,16 +135,17 @@
     </div>
   </div>
 
-  <!-- 글쓰기 폼 -->
+  <!-- 글수정 폼 -->
   <div class="write-container">
-    <div class="write-title">게시글 작성</div>
-    <form class="write-form" id="writeForm">
-      <input type="text" id="writer" placeholder="작성자" maxlength="20" required />
-      <input type="text" id="title" placeholder="제목" maxlength="100" required />
-      <textarea id="content" placeholder="내용을 입력하세요." maxlength="2000" required></textarea>
+    <div class="write-title">게시글 수정</div>
+    <form class="write-form" id="writeForm" action='{% url "board:update" board.bno %}' method='POST'>
+      {% csrf_token %}
+      <input type="text" name='id' id="writer" placeholder="작성자" maxlength="20" value='{{request.session.session_id}}' disabled />
+      <input type="text" name='btitle' id="title" placeholder="제목" maxlength="100" value='{{board.btitle}}'  required />
+      <textarea name='bcontent' id="content" placeholder="내용을 입력하세요." maxlength="2000" required>{{board.bcontent}}</textarea>
 
       <div class="write-buttons">
-        <button type="submit">등록</button>
+        <button type="submit">수정</button>
         <button type="button" class="cancel" onclick="history.back()">취소</button>
       </div>
     </form>
@@ -143,27 +156,6 @@
     Copyright © VLAST Shop. All rights reserved.
   </footer>
 
-  <script>
-    const writeForm = document.getElementById('writeForm');
 
-    writeForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const writer = document.getElementById('writer').value.trim();
-      const title = document.getElementById('title').value.trim();
-      const content = document.getElementById('content').value.trim();
-
-      if (!writer || !title || !content) {
-        alert('모든 항목을 입력해주세요.');
-        return;
-      }
-
-      // 이 부분에 서버로 데이터 전송 로직을 추가하거나 저장 기능 구현
-      alert('게시글이 등록되었습니다.');
-
-      // 예시: 목록 페이지로 이동
-      window.location.href = 'board.html';
-    });
-  </script>
 </body>
 </html>
