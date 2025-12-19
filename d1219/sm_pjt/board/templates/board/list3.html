@@ -1,0 +1,96 @@
+<!-- 공통영역이 들어가는 부분-->
+{% extends "base.html" %}
+
+
+{% block title-block %}
+<title>VLAST Shop - 개시판</title>
+{% endblock title-block %}
+
+
+<!-- 개별영역 : css -->
+{% block css-block %}
+<link rel='stylesheet' href='/static/css/list.css'>
+{% endblock css-block %}
+
+
+<!-- 개별영역 : Board List -->
+{% block body-block %}
+  <div class="board-container">
+    <div class="board-title">공공데이터 API</div>
+    <table class="board-table">
+      <colgroup>
+        <col width='10%'>
+        <col width='40%'>
+        <col width='50%'>
+      </colgroup>
+      <thead>
+        <tr>
+          <th>순위</th>
+          <th>영화제목</th>
+          <th>개봉일자</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if list %}
+          {% for m in list  %}
+            <tr>
+              <td>{{m.rank}}</td>
+              <td>{{m.movieNm}}</td>
+              <td class="date">{{m.openDt}}</td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan='3'>데이터가 없습니다.</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+    <!-- Write Button -->
+    <div class="write-box">
+      <a href="/board/write/" class="write-btn">글쓰기</a>
+    </div>
+    <!-- Pagination & Search -->
+    <div class="board-footer" >
+        <div class="pagination">
+            <!-- 처음페이지, 이전페이지 버튼 -->
+            {% if list.has_previous  %}
+              <a href="/board/list/?page=1">&laquo;</a>
+              <a href="/board/list/?page={{list.previous_page_number}}">&lt;</a>
+            {% else %}
+              <a>&laquo;</a>
+              <a>&lt;</a>
+            {% endif %}
+            <!-- 넘버링 시작 -->
+            {% for p in list.paginator.page_range  %}
+               {% if p >= list.number|add:'-3' and p <= list.number|add:'3' %}
+                  {% if p == list.number %}
+                      <a class="active">{{p}}</a>
+                  {% else %}
+                      <a href="/board/list/?page={{p}}">{{p}}</a>
+                  {% endif %}
+               {% endif %}
+              {% comment %}
+                {% if p == page %}
+                  <a class="active">{{p}}</a>
+                {% else %}
+                  <a href="/board/list/?page={{p}}">{{p}}</a>
+                {% endif %}
+              {% endcomment %}
+            {% endfor %}
+            <!-- 다음페이지, 마지막페이지 -->
+            {% if list.has_next  %}
+              <a href="/board/list/?page={{list.next_page_number}}">&gt;</a>
+              <a href="/board/list/?page={{list.paginator.num_pages}}">&raquo;</a>
+            {% else %}
+              <a>&gt;</a>
+              <a>&raquo;</a>
+            {% endif %}
+        </div>
+        <div class="search-box">
+            <input type="text" placeholder="검색어 입력">
+            <button>검색</button>
+        </div>
+    </div>
+  </div>
+{% endblock body-block %}
