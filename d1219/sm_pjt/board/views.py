@@ -99,15 +99,30 @@ def view2(request,bno):
 
 # 게시판 리스트
 def list(request):
-    # 게시글 모두 가져오기
-    qs = Board.objects.all().order_by('-bgroup','bstep')
-    # 하단 넘버링 (qs,10) -> 1페이지 10개씩
-    paginator = Paginator(qs,10)  # 101 -> 11
-    # 현재페이지 넘김.
-    page = int(request.GET.get('page',1))
-    list_qs = paginator.get_page(page) # 1page -> 게시글 10개를 전달
+    # 검색입력창에서 검색하는 단계
+    search= request.GET.get('search','')
+    if search=='':
+        # 게시글 모두 가져오기
+        qs = Board.objects.all().order_by('-bgroup','bstep')
+        # 하단 넘버링 (qs,10) -> 1페이지 10개씩
+        paginator = Paginator(qs,10)  # 101 -> 11
+        # 현재페이지 넘김.
+        page = int(request.GET.get('page',1))
+        list_qs = paginator.get_page(page) # 1page -> 게시글 10개를 전달
+    else:
+        # __contains 입력한 검색단어가 포함되어있는 개시물을 모두 찾아줘.
+        # __icontains 입력한 검색단어가 포함되어있으면 대소문자 상관없이 모두 찾아줘
+        
+        qs= Board.objects.filter(Q(btitle__icontains=search)|Q(bcontent__icontains=search))    
+        # and조건
+        # qs= Board.objects.filter(btitle__icontains='답글',bcontent__icontains='답글')    
+        # or조건
+        # qs= Board.objects.filter(Q(btitle__icontains='답글')|Q(bcontent__icontains='답글'))
+        
+        # 하단 넘버링
+           
     
-    context = {'list':list_qs,'page':page}
+    context = {'list':list_qs,'page':page,'search':search}
     return render(request,'board/list.html',context)
 
 
