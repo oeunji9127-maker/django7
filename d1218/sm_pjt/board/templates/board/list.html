@@ -310,7 +310,7 @@
     <div class="board-footer" >
         <div class="pagination">
             <!-- 처음페이지, 이전페이지 버튼 -->
-            {% if list.has_previous  %}
+            {%if list.has_previous%}
               <a href="/board/list/?page=1">&laquo;</a>
               <a href="/board/list/?page={{list.previous_page_number}}">&lt;</a>
             {% else %}
